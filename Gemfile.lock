@@ -1,0 +1,18 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ffi (1.9.3)
+    pi_piper (1.3)
+      ffi
+    rake (10.3.2)
+    serialport (1.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  httparty
+  pi_piper
+  rake
+  serialport
+  whenever

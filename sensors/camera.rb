@@ -7,8 +7,13 @@ module Sensors
       @filename = "rpi_#{time}.jpg"
     end
 
-    def capture
-      cmd = "raspistill --nopreview --timeout 1 --thumb none --output #{@filename}"
+    def capture(mode = :day)
+      settings = ''
+      if mode == :night
+        settings = '-ISO 1600 -ss 500000'
+      end
+
+      cmd = "raspistill -w 960 -h 720 #{settings} --output #{@filename}"
       system(cmd)
     end
 

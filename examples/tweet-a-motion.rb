@@ -1,6 +1,6 @@
-require_relative 'sensors/camera'
-require_relative 'sensors/motion'
-require_relative 'services/twitter'
+require_relative '../sensors/camera'
+require_relative '../sensors/motion'
+require_relative '../services/twitter'
 
 camera = Camera.new
 twitter = Twitter.new

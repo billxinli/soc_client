@@ -13,7 +13,7 @@ module Sensors
     end
 
     def to_abs_path
-      File.join(File.expand_path(File.dirname(__FILE__)), @filename)
+      File.join(Dir.pwd, @filename)
     end
 
     def cleanup

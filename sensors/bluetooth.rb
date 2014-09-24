@@ -22,13 +22,17 @@ module Sensors
 
     end
 
-    def rssi(bdaddr, max_failed = 100, min_succeed = 10)
+    def rssi(bdaddr, max_failed = 5, min_succeed = 10)
       cmd = "hcitool cc #{bdaddr} & hcitool rssi #{bdaddr}"
       failed = 0
       succeed = 0
       rssis = []
       rssi_regex = /RSSI return value: (?<rssi>-?\d+)/
-      while (failed < max_failed && succeed <= min_succeed) do
+
+      start = Time.now.to_i
+      now = Time.now.to_i
+
+      while (failed < max_failed && succeed <= min_succeed && (now - start) < 3) do
         stdin, stdout, stderr = Open3.popen3(cmd)
         results = stdout.read
         errors = stderr.read
@@ -37,13 +41,13 @@ module Sensors
         if results
           rssis.push results[:rssi].to_f
           succeed += 1
-        elsif errors && errors.include?('Read RSSI failed: Input/output error') && (results.nil? || results.length == 0)
-          failed += 1
+        elsif errors && errors.include?('Read RSSI failed: Input/output error')
+          failed += 2
         else
           failed += 1
         end
+        now = Time.now.to_i
       end
-      puts rssis.inspect
       return nil if rssis.empty?
       return rssis.reduce(:+).to_f / rssis.size
     end

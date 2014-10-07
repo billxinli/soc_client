@@ -8,7 +8,7 @@
 # set :output, "/path/to/my/cron_log.log"
 #
 every 3.minutes do
-  command "ruby /root/sign/sign.rb"
+  command "ruby /root/code/soc_client/snippets/sign.rb write-to-sign"
 end
 #
 # every 4.days do

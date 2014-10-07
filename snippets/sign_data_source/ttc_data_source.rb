@@ -30,8 +30,12 @@ class TtcDataSource < SignDataSource
                       predictions.collect { |x| x['prediction'] }.flatten
                     end
 
-      predictions = predictions.sort! { |a, b| a['epochTime'] <=> b['epochTime'] }
-      prediction = predictions.first
+      if predictions.is_a?(Array)
+        predictions = predictions.sort! { |a, b| a['epochTime'] <=> b['epochTime'] }
+        prediction = predictions.first
+      else
+        prediction = predictions
+      end
       minutes = prediction['minutes']
       prediction_time = Time.at(prediction['epochTime'].to_f/1000).strftime('%-I:%M%p')
       "#{routeTag} #{minutes} #{prediction_time}"[0..-2]

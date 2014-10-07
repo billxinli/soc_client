@@ -21,7 +21,7 @@ message = [
 ].compact.join('|')
 
 if ARGV.first && ARGV.first == 'write-to-sign'
-  ascp = Sign.new('/dev/ttyUSB0')
+  ascp = Services::Sign.new('/dev/ttyUSB0')
   ascp.type_code = 'ALL_SIGN'
   ascp.sign_address = 'BROADCAST'
   ascp.simple_string!(message)
